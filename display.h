@@ -2,6 +2,7 @@
 #define __DISPLAY_PROJ__
 
 #include "proj_utils.h"
+#include "game.h"
 
 namespace Display {
   void printRotating();

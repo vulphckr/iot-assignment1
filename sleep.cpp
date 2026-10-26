@@ -22,6 +22,8 @@ namespace SleepHandler {
       sleep_disable();
       lcd.backlight();
       currentStatus = IDLE;
+      Timer1.initialize(50000);
+      Timer1.attachInterrupt(Handlers::changeLedStatus); 
     }
   }
 }

@@ -11,7 +11,7 @@ namespace Handlers {
     long curTime = millis();
     if (curTime - lastCheckA > TOLERANCE) {
       lastCheckA = curTime;
-      ++scoreA;
+      ++pressesA;
     }
   }
 
@@ -20,17 +20,16 @@ namespace Handlers {
     long curTime = millis();
     if (curTime - lastCheckB > TOLERANCE) {
       lastCheckB = curTime;
-      ++scoreB;
+      ++pressesB;
     }
   }
 
   void readyToPlay() {
+    Timer1.stop(); 
+    Timer1.detachInterrupt();
+
     Game::generatePresses();
     Game::generateT1();
-
-    Timer1.detachInterrupt();
-    Timer1.initialize(t1 * 1000);
-    Timer1.attachInterrupt(Game::checkRoundResults);
 
     currentStatus = PLAYING;
   }

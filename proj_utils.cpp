@@ -4,7 +4,7 @@
 LiquidCrystal_I2C lcd = LiquidCrystal_I2C(0x27, 20, 4); 
 volatile long lastCheckA {};
 volatile long lastCheckB {};
-Status currentStatus = IDLE;
+volatile Status currentStatus = IDLE;
 
 short scoreA {};
 short scoreB {};

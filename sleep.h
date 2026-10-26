@@ -2,6 +2,7 @@
 #define __SLEEPING__
 
 #include "proj_utils.h"
+#include "int_handlers.h"
 
 namespace SleepHandler {
   bool isDeepSleep();

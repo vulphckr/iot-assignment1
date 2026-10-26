@@ -44,9 +44,8 @@ typedef enum {
     STARTING,
     WAITING,
     PLAYING,
-    WIN,
-    TIE
+    RESULT
 } Status;
 
-extern Status currentStatus;
+extern volatile Status currentStatus;
 #endif
