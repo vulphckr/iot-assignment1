@@ -1,12 +1,18 @@
-#ifndef __DISPLAY_PROJ__
-#define __DISPLAY_PROJ__
+/*
+  Header containing all functions regarding the 
+  I2C display such as printing text.
+*/
 
-#include "proj_utils.h"
-#include "game.h"
+#ifndef __DISPLAYPROJ__
+#define __DISPLAYPROJ__
+
+#include <LiquidCrystal_I2C.h>
+#include "proj_constants.h"
 
 namespace Display {
-  void printRotating();
-  void normalPrint();
+  void initializeLCD(); // Initializes the LCD display
+  void printRotating(); // Prints a "rotating" text on the display.
+  void normalPrint();   // Prints a still text on the display, centered on second row.
 }
 
 #endif
