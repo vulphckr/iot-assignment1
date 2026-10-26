@@ -1,8 +1,10 @@
 #include <TimerOne.h>
-#include <avr/sleep.h>
-#include "proj_constants.h"
-#include "handlers.h"
 #include "display.h"
+#include "engine.h"
+#include "handlers.h"
+#include "proj_constants.h"
+#include "sleeping.h"
+
 
 // Setup everything that is wired
 void setup() {
@@ -37,13 +39,18 @@ void setup() {
   // LCD I2C Screen
   Display::initializeLCD();
 
-  // Sleep Mode
-  set_sleep_mode(SLEEP_MODE_PWR_DOWN);
-
   // Timer for fading LEDs
   Timer1.initialize(50000);
   Timer1.attachInterrupt(Handlers::changeLedStatus);
 }
 
 void loop() {
+  if(Handlers::isInactive()) {
+  Sleeping::manageDeepSleep();
+  }
+
+  switch (Engine::getCurrentStatus()) {
+    case Engine::IDLE: Engine::idle(); return;
+    default: return;
+  }
 }

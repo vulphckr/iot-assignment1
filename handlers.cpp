@@ -31,6 +31,12 @@ namespace Handlers {
     }
   };
 
+  bool isInactive() {
+    // If both of the buttons are not pressed within TIME_UNTIL_DEEP_SLEEP, the system goes into deep sleep.
+    return (millis() - lastCheckA) > Constants::DEEP_SLEEP_TIME
+      && (millis() - lastCheckB) > Constants::DEEP_SLEEP_TIME;
+  }
+  
   // Timer interrupt for managing the rising/fading Red LEDs.
   void changeLedStatus() {
     // Check if value overflows MAX_PULSE_VAL or underflows 0

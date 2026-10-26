@@ -34,8 +34,9 @@ namespace Constants {
   constexpr int PULSE_SPEED { 10 };             // Changes the speed of the pulsation (both fading/rising)
 
   // Behavior-related constants
-  constexpr int DEEP_SLEEP_TIME { 20000 };      // Time until the system goes into deep sleep (in ms)
+  constexpr int DEEP_SLEEP_TIME { 10000 };      // Time until the system goes into deep sleep (in ms)
   constexpr int BUTTON_TOLERANCE { 190 };       // Button tolerance to avoid debounce
+  constexpr int TEXT_SPEED { 200 };             // Text scrolling speed
   constexpr int BOTH_PRESSED_TOLERANCE { 500 }; // Time span for both buttons to be considered as pressed toghether
   constexpr int MAX_WAITING_TIME { 5000 };      // Maximum amount of time possible to wait between each round
 }
