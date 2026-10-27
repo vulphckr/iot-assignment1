@@ -1,4 +1,3 @@
-#include <TimerOne.h>
 #include "display.h"
 #include "engine.h"
 #include "handlers.h"
@@ -40,7 +39,7 @@ void setup() {
   Display::initializeLCD();
 
   // Timer for fading LEDs
-  Timer1.initialize(50000);
+  Timer1.initialize(Constants::PULSE_INTERVAL);
   Timer1.attachInterrupt(Handlers::changeLedStatus);
 }
 
@@ -51,6 +50,7 @@ void loop() {
 
   switch (Engine::getCurrentStatus()) {
     case Engine::IDLE: Engine::idle(); return;
+    case Engine::STARTING: Engine::starting(); return;
     default: return;
   }
 }

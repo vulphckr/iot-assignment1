@@ -15,6 +15,8 @@ namespace Display {
     switch(Engine::getCurrentStatus()) {
       case Engine::IDLE:
         return "Welcome to the React! Game. Press Buttons to Start.    ";
+      case Engine::STARTING:
+        return "Go!";
       default:
         return "";
     }
@@ -35,6 +37,10 @@ namespace Display {
   // Turns the LCD back on - used for deep sleeping
   void turnOn() {
     display.backlight();
+  }
+
+  void clear() {
+    display.clear();
   }
 
   void printRotating() {
@@ -69,5 +75,18 @@ namespace Display {
     currentChar = (currentChar < fullText.length()) ? (currentChar + 1) : 0;
   }
 
-  void normalPrint() {}   // Prints a still text on the display, centered on second row.
+  void normalPrint() {
+    String displayed = getStringForGameStatus();
+    // Sets the cursor at the center of the second row
+    display.setCursor(((Constants::LCD_WIDTH - (int)displayed.length() + 1) / 2), 1);
+    display.print(displayed);
+  } 
+
+  void printScore(short scoreA, short scoreB) {
+    // Sets the cursor based off the digit number
+    display.setCursor(Constants::SCORE_DIGITS, 3);
+    display.print(scoreA);
+    display.setCursor(Constants::LCD_WIDTH - Constants::SCORE_DIGITS - 1, 3);
+    display.print(scoreB);
+  }
 }

@@ -36,7 +36,18 @@ namespace Handlers {
     return (millis() - lastCheckA) > Constants::DEEP_SLEEP_TIME
       && (millis() - lastCheckB) > Constants::DEEP_SLEEP_TIME;
   }
-  
+
+  bool checkIfBothPressed() {
+    if (abs(lastCheckA-lastCheckB) < Constants::BOTH_PRESSED_TOLERANCE) {
+      long curTime = millis();
+      // Used to not re-trigger the condition afterwards
+      lastCheckA = curTime;
+      lastCheckB = curTime + 2*Constants::BOTH_PRESSED_TOLERANCE;
+      return true;
+    }
+    else return false;
+  }
+
   // Timer interrupt for managing the rising/fading Red LEDs.
   void changeLedStatus() {
     // Check if value overflows MAX_PULSE_VAL or underflows 0

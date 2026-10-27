@@ -9,8 +9,9 @@
 #define __PROJCONST__
 
 #include <Arduino.h>
+#include <TimerOne.h> // For Timer1 management
 // Removing the following comment will enable debug prints.
-// #define DEBUG
+#define DEBUG
 
 namespace Constants {
   // Button Pins
@@ -30,6 +31,7 @@ namespace Constants {
   constexpr int LCD_HEIGHT { 4 };               // LCD Display Height (in rows)
 
   // Pulsating LEDs
+  constexpr int PULSE_INTERVAL { 50000 };       // Pulsing LED interval
   constexpr int MAX_PULSE_VAL { 255 };          // Maximum pulsation value
   constexpr int PULSE_SPEED { 10 };             // Changes the speed of the pulsation (both fading/rising)
 
@@ -39,5 +41,6 @@ namespace Constants {
   constexpr int TEXT_SPEED { 200 };             // Text scrolling speed
   constexpr int BOTH_PRESSED_TOLERANCE { 500 }; // Time span for both buttons to be considered as pressed toghether
   constexpr int MAX_WAITING_TIME { 5000 };      // Maximum amount of time possible to wait between each round
+  constexpr int SCORE_DIGITS { 3 };             // Maximum digits of the score
 }
 #endif

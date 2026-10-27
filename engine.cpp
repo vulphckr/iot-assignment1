@@ -10,8 +10,21 @@ namespace Engine {
       return;
     }
 
+    if(Handlers::checkIfBothPressed()) {
+      currentStatus = STARTING;
+      return;
+    }
+
     Display::printRotating();
-    delay(200);
+  }
+
+  void starting() {
+    Timer1.stop();
+    Display::clear();
+    Display::normalPrint();
+    Display::printScore(Game::getScoreA(), Game::getScoreB());
+    delay(3000); // Busy Waiting here is OK.
+    currentStatus = IDLE; // Move to WAITING
   }
 
   Status getCurrentStatus() {

@@ -2,6 +2,8 @@
 #define __PROJENGINE__
 
 #include "proj_constants.h"
+#include "handlers.h"
+#include "game.h"
 #include "display.h"
 
 namespace Engine {
@@ -16,6 +18,7 @@ namespace Engine {
 
   Status getCurrentStatus();      // Returns the current game status
   void idle();                    // Manages the IDLE status
+  void starting();                // Manages the STARTING status
 }
 
 #endif
