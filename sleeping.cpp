@@ -10,6 +10,7 @@ namespace Sleeping {
     sleep_mode(); // From now on the system goes into deep sleep
     
     // Recovery - turns on display, gets back to main menu
+    Timer1.start();
     Display::turnOn();
     Engine::idle();
   }

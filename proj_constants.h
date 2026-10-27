@@ -24,6 +24,9 @@ namespace Constants {
   constexpr int GRN_LED_P1 { 7 };               // Green LED (Left)
   constexpr int GRN_LED_P2 { 8 };               // Green LED (Right)
 
+  // Potentiometer
+  constexpr int POTENTIOMETER_PIN { A3 };       // Potentiometer Pin
+
   // Serial & LCD Communication 
   constexpr int BAUD_RATE { 9600 };             // For serial transmission
   constexpr int LCD_ADDR { 0x27 };              // LCD Registry Address
@@ -31,16 +34,24 @@ namespace Constants {
   constexpr int LCD_HEIGHT { 4 };               // LCD Display Height (in rows)
 
   // Pulsating LEDs
-  constexpr int PULSE_INTERVAL { 50000 };       // Pulsing LED interval
+  constexpr int PULSE_INTERVAL { 20000 };       // Pulsing LED interval
   constexpr int MAX_PULSE_VAL { 255 };          // Maximum pulsation value
   constexpr int PULSE_SPEED { 10 };             // Changes the speed of the pulsation (both fading/rising)
 
   // Behavior-related constants
   constexpr int DEEP_SLEEP_TIME { 10000 };      // Time until the system goes into deep sleep (in ms)
   constexpr int BUTTON_TOLERANCE { 190 };       // Button tolerance to avoid debounce
-  constexpr int TEXT_SPEED { 200 };             // Text scrolling speed
+  constexpr int TEXT_SPEED { 250 };             // Text scrolling speed
   constexpr int BOTH_PRESSED_TOLERANCE { 500 }; // Time span for both buttons to be considered as pressed toghether
   constexpr int MAX_WAITING_TIME { 5000 };      // Maximum amount of time possible to wait between each round
   constexpr int SCORE_DIGITS { 3 };             // Maximum digits of the score
+  constexpr int WIN_SHOW_TIME { 10000 };        // Showing time of winning
+
+  // Difficulty Modifiers
+  constexpr int STARTING_T1 { 2000 };
+  constexpr double EASY { 0.90 };
+  constexpr double MEDIUM { 0.75 };
+  constexpr double HARD { 0.60 };
+  constexpr double VERY_HARD { 0.50 }; 
 }
 #endif

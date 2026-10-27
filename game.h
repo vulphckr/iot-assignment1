@@ -9,24 +9,26 @@ namespace Game {
   typedef enum {
     WIN_A,
     WIN_B,
-    TIE
+    EARLY_A,
+    EARLY_B,
+    TIE,
+    GAME_OVER
   } RoundResult;
 
   // Scoring system
   void resetScores();                     // Resets both the scores
-  void increaseScoreA();                  // Increases A score
-  void increaseScoreB();                  // Increases B score
-  void decreaseScoreA();                  // Decreases A score
-  void decreaseScoreB();                  // Decreases B score
 
   short getScoreA();                      // Returns the score for player A
   short getScoreB();                      // Returns the score for player B
 
   void generateT1();                      // Generates round time duration
+  void setDifficulty();                   // Set difficulty based off the pot sensor.
   short generatePresses();                // Generates round presses to be made
 
+  bool tooEarly();                        // True if someone pressed early
+  RoundResult manageEarlyPenalty();       // Manages the penalty of the player who pressed early
   bool hasRoundFinished(long timeStamp);  // Checks if round has finished
-  RoundResult getRoundResult();            // At the end of the round, gets the result
+  RoundResult getRoundResult();           // At the end of the round, gets the result
 }
 
 #endif

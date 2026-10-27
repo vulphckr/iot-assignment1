@@ -2,6 +2,7 @@
 #define __PROJSLEEP__
 
 #include <avr/sleep.h>
+#include <TimerOne.h>
 #include "proj_constants.h"
 #include "display.h"
 #include "engine.h"

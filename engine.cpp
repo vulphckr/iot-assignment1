@@ -3,6 +3,7 @@
 namespace Engine {
   static Status currentStatus = IDLE; // The status the game is in currently
   static bool roundSetupped {}; // If the round is not setupped
+  static bool showWin {};
 
   void idle() {
     // Resets to IDLE if the system wakes up from Deep Sleep
@@ -17,11 +18,17 @@ namespace Engine {
       return;
     }
 
-    Display::printRotating();
+    Display::printRotating("");
   }
 
   void starting() {
     Timer1.stop();
+    digitalWrite(Constants::RED_LED_P1, LOW);
+    digitalWrite(Constants::RED_LED_P2, LOW);
+  #ifdef DEBUG
+    Serial.println("Potenziometro: " + String(analogRead(Constants::POTENTIOMETER_PIN)));
+  #endif
+    Game::setDifficulty();
     Game::resetScores();
     Handlers::resetPresses();
     Display::clear();
@@ -45,10 +52,16 @@ namespace Engine {
       Serial.println("Round is being setupped.");
   #endif
       roundSetupped = true;
-      Display::clear();
 
+      Display::clear();
       Handlers::resetPresses();
       Display::normalPrint();
+
+      digitalWrite(Constants::GRN_LED_P1, LOW);
+      digitalWrite(Constants::GRN_LED_P2, LOW);
+      digitalWrite(Constants::RED_LED_P1, LOW);
+      digitalWrite(Constants::RED_LED_P2, LOW);
+
       generatedTime = ((rand() % 4) + 1) * 1000; 
       timeSinceCountStarted = millis();
       
@@ -59,6 +72,22 @@ namespace Engine {
       Game::generateT1();
       currentStatus = PLAYING;
     }
+
+    if (Game::tooEarly()) {
+      currentStatus = TOO_EARLY;
+    } 
+  }
+
+  void too_early() {
+    roundSetupped = false;
+    switch (Game::manageEarlyPenalty()) {
+      case Game::EARLY_A: Display::normalPrint("P1 pressed too early"); break;
+      case Game::EARLY_B: Display::normalPrint("P2 pressed too early"); break;
+      default: break;
+    }
+    Display::printScore(Game::getScoreA(), Game::getScoreB());
+    delay(2000);
+    currentStatus = WAITING;
   }
 
   void playing() {
@@ -78,32 +107,54 @@ namespace Engine {
   }
 
   void result() {
-    Display::clear();
     switch (Game::getRoundResult()) {
       case Game::WIN_A: {
-        Display::normalPrint("Ha vinto A!");
-        Game::increaseScoreA();
+        Display::clear();
+        Display::normalPrint("P1 got the point!");
         Display::printScore(Game::getScoreA(), Game::getScoreB());
         delay(2000);
         currentStatus = WAITING;
         break;
       }
       case Game::WIN_B: {
-        Display::normalPrint("Ha vinto B!");
-        Game::increaseScoreB();
+        Display::clear();
+        Display::normalPrint("P2 got the point!");
         Display::printScore(Game::getScoreA(), Game::getScoreB());
         delay(2000);
         currentStatus = WAITING;
         break;
       }
       case Game::TIE: {
-        Display::normalPrint("Pareggio!");
+        Display::clear();
+        Display::normalPrint("Tie!");
         Display::printScore(Game::getScoreA(), Game::getScoreB());
-        Handlers::preventRetrigger();
         delay(2000);
-        currentStatus = IDLE;
+        currentStatus = WAITING;
         break;
       }
+      case Game::GAME_OVER: {
+        static long timeSinceCountStarted {};
+
+        if(!showWin) {
+          showWin = true;
+          timeSinceCountStarted = millis();
+          Display::clear();
+        }
+        String toPrint = "Game Over - ";
+        toPrint += ((Game::getScoreA() == Game::getScoreB()) ? "Tie!"
+          :(Game::getScoreA() > Game::getScoreB()) ? "P1 Wins!    " : "P2 Wins!    ");
+        Display::printRotating(toPrint);
+        Display::printScore(Game::getScoreA(), Game::getScoreB());
+        Handlers::preventRetrigger();
+        if (millis() - timeSinceCountStarted >= Constants::WIN_SHOW_TIME) {
+          Display::clear();
+          Timer1.start();
+          showWin = false;
+          currentStatus = IDLE;
+        }
+        break;
+      }
+      default: return;
     }
   }
 

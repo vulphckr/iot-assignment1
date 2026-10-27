@@ -4,12 +4,12 @@ namespace Display {
   static signed int currentChar {};       // Current rotation character
   static unsigned long lastScrollTime {}; // Last time a scroll was made
   static LiquidCrystal_I2C display {
-      LiquidCrystal_I2C(
-        Constants::LCD_ADDR,
-        Constants::LCD_WIDTH,
-        Constants::LCD_HEIGHT
-      )
-    }; // Display which will be used for printing
+    LiquidCrystal_I2C(
+      Constants::LCD_ADDR,
+      Constants::LCD_WIDTH,
+      Constants::LCD_HEIGHT
+    )
+  }; // Display which will be used for printing
 
   String getStringForGameStatus() {
     switch(Engine::getCurrentStatus()) {
@@ -45,7 +45,7 @@ namespace Display {
     display.clear();
   }
 
-  void printRotating() {
+  void printRotating(String toPrint) {
     // First, we check if a scroll has to be made
     // We use this instead of delay() for preventing busy waiting
     unsigned long currentMillis = millis();
@@ -56,11 +56,10 @@ namespace Display {
 
     // Performing the scroll
     lastScrollTime = currentMillis;
-    display.clear();
-    String fullText = getStringForGameStatus();
+    String fullText = (toPrint.equals("")) ? getStringForGameStatus() : toPrint;
 
     // Padding for text - adds spaces until LCD_WIDTH + 5 (if necessary)
-    while (fullText.length() < Constants::LCD_WIDTH + 5) {
+    while (fullText.length() < Constants::LCD_WIDTH) {
       fullText += " ";
     }
 

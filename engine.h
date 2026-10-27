@@ -12,6 +12,7 @@ namespace Engine {
     IDLE,           // Game not started, in sort of "main menu" (either after boot, after deep sleep or after Tie)
     STARTING,       // The game is starting (both buttons pressed)
     WAITING,        // A round is about to be played - random amount of wait
+    TOO_EARLY,      // Someone pressed the button too early.
     PLAYING,        // A round is being played
     RESULT          // The round result is shown
   } Status;
@@ -20,6 +21,7 @@ namespace Engine {
   void idle();                    // Manages the IDLE status
   void starting();                // Manages the STARTING status
   void waiting();                 // Manages the WAITING status
+  void too_early();               // Manages the TOO_EARLY status
   void playing();                 // Manages the PLAYING status
   void result();                  // Manages the RESULT status
 }

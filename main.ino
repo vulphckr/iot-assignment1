@@ -4,7 +4,6 @@
 #include "proj_constants.h"
 #include "sleeping.h"
 
-
 // Setup everything that is wired
 void setup() {
   #ifdef DEBUG
@@ -49,11 +48,12 @@ void loop() {
   }
 
   switch (Engine::getCurrentStatus()) {
-    case Engine::IDLE: Engine::idle();          return;
-    case Engine::STARTING: Engine::starting();  return;
-    case Engine::WAITING: Engine::waiting();    return;
-    case Engine::PLAYING: Engine::playing();    return;
-    case Engine::RESULT: Engine::result();      return;
+    case Engine::IDLE: Engine::idle();           return;
+    case Engine::STARTING: Engine::starting();   return;
+    case Engine::TOO_EARLY: Engine::too_early(); return;
+    case Engine::WAITING: Engine::waiting();     return;
+    case Engine::PLAYING: Engine::playing();     return;
+    case Engine::RESULT: Engine::result();       return;
     default: return;
   }
 }
