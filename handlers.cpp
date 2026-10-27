@@ -19,6 +19,9 @@ namespace Handlers {
     if (curTime - lastCheckA > Constants::BUTTON_TOLERANCE) {
       lastCheckA = curTime;
       ++pressesA;
+  #ifdef DEBUG
+    Serial.println("Button A pressed. Total A presses: " + String(pressesA));
+  #endif
     }
   };
 
@@ -28,8 +31,18 @@ namespace Handlers {
     if (curTime - lastCheckB > Constants::BUTTON_TOLERANCE) {
       lastCheckB = curTime;
       ++pressesB;
+  #ifdef DEBUG
+    Serial.println("Button B pressed. Total B presses: " + String(pressesB));
+  #endif
     }
-  };
+  }
+
+  short getAPresses() { return pressesA; }
+  short getBPresses() { return pressesB; }
+  void resetPresses() {
+    pressesA = 0;
+    pressesB = 0;
+  }
 
   bool isInactive() {
     // If both of the buttons are not pressed within TIME_UNTIL_DEEP_SLEEP, the system goes into deep sleep.
@@ -41,11 +54,16 @@ namespace Handlers {
     if (abs(lastCheckA-lastCheckB) < Constants::BOTH_PRESSED_TOLERANCE) {
       long curTime = millis();
       // Used to not re-trigger the condition afterwards
-      lastCheckA = curTime;
-      lastCheckB = curTime + 2*Constants::BOTH_PRESSED_TOLERANCE;
+      preventRetrigger();
       return true;
     }
     else return false;
+  }
+
+  void preventRetrigger() {
+    long curTime = millis();
+    lastCheckA = curTime;
+    lastCheckB = curTime + 2*Constants::BOTH_PRESSED_TOLERANCE;
   }
 
   // Timer interrupt for managing the rising/fading Red LEDs.
@@ -69,4 +87,11 @@ namespace Handlers {
       // Adding a delay for not being considered as pressed toghether at first.
       lastCheckB = lastCheckA + Constants::BOTH_PRESSED_TOLERANCE;
   };
+
+  bool isAPressedBeforeB() {
+  #ifdef DEBUG
+    Serial.println("Stampa timer. A:" + String(lastCheckA) + ", B:" + String(lastCheckB));
+  #endif
+    return lastCheckA < lastCheckB;
+  }
 }

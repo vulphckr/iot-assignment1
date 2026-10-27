@@ -17,6 +17,7 @@ namespace Display {
   void clear();                                 // Clears the LCD once
   void printRotating();                         // Prints a "rotating" text on the display
   void normalPrint();                           // Prints a still text on the display, centered on second row
+  void normalPrint(String toPrint);             // Same as before, but the value to print is specified
   void printScore(short scoreA, short scoreB);  // Prints the specified scores on the last row
 }
 

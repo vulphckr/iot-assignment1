@@ -17,6 +17,8 @@ namespace Display {
         return "Welcome to the React! Game. Press Buttons to Start.    ";
       case Engine::STARTING:
         return "Go!";
+      case Engine::WAITING:
+        return "Ready...";
       default:
         return "";
     }
@@ -81,6 +83,11 @@ namespace Display {
     display.setCursor(((Constants::LCD_WIDTH - (int)displayed.length() + 1) / 2), 1);
     display.print(displayed);
   } 
+
+  void normalPrint(String toPrint) {
+    display.setCursor(((Constants::LCD_WIDTH - (int)toPrint.length() + 1) / 2), 1);
+    display.print(toPrint);
+  }
 
   void printScore(short scoreA, short scoreB) {
     // Sets the cursor based off the digit number

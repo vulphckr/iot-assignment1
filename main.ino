@@ -49,8 +49,11 @@ void loop() {
   }
 
   switch (Engine::getCurrentStatus()) {
-    case Engine::IDLE: Engine::idle(); return;
-    case Engine::STARTING: Engine::starting(); return;
+    case Engine::IDLE: Engine::idle();          return;
+    case Engine::STARTING: Engine::starting();  return;
+    case Engine::WAITING: Engine::waiting();    return;
+    case Engine::PLAYING: Engine::playing();    return;
+    case Engine::RESULT: Engine::result();      return;
     default: return;
   }
 }

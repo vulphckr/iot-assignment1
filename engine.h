@@ -19,6 +19,9 @@ namespace Engine {
   Status getCurrentStatus();      // Returns the current game status
   void idle();                    // Manages the IDLE status
   void starting();                // Manages the STARTING status
+  void waiting();                 // Manages the WAITING status
+  void playing();                 // Manages the PLAYING status
+  void result();                  // Manages the RESULT status
 }
 
 #endif
